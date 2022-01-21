@@ -1,4 +1,4 @@
-module kvserver-cli
+module github.com/banafish/kvserver-cli
 
 go 1.16
 
