@@ -1,7 +1,7 @@
-package main
+package client
 
 import (
-	"kvserver-cli/util"
+	"github.com/banafish/kvserver-cli/util"
 	"log"
 	"math/rand"
 	"net/rpc"

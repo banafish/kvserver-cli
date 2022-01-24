@@ -3,11 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/banafish/kvserver-cli/client"
 	"os"
 	"strings"
 )
 
-var ck *Clerk
+var ck *client.Clerk
 
 func main() {
 	input := bufio.NewScanner(os.Stdin)
@@ -21,7 +22,7 @@ func main() {
 			fmt.Println("输入有误，请重新输入")
 			continue
 		}
-		ck = MakeClerk(strings.Split(str, " "))
+		ck = client.MakeClerk(strings.Split(str, " "))
 		fmt.Println("ok")
 		break
 	}
