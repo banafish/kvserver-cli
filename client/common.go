@@ -5,6 +5,8 @@ const (
 	ErrNoKey              = "ErrNoKey"
 	ErrWrongLeader        = "ErrWrongLeader"
 	ErrFailReachAgreement = "ErrFailReachAgreement"
+	ErrRetryCountReached  = "ErrRetryCountReached"
+	LeaderIsNotInLease    = "LeaderIsNotInLease"
 
 	OpTypeGet    OpType = "Get"
 	OpTypePut    OpType = "Put"
