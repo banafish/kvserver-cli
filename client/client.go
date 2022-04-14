@@ -73,6 +73,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) error {
 	ck.mu.Lock()
 	defer ck.mu.Unlock()
 	id := ck.leaderID
+	// 递增请求 id
 	ck.seq++
 	args := PutAppendArgs{
 		ClientID: ck.clientID,
@@ -84,6 +85,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) error {
 
 	for i := 0; i < ck.retryCount; i++ {
 		var reply PutAppendReply
+		// 发送 RPC 请求
 		if err := ck.sendRPCRequest(id, "KVServerAPI.PutAppend", &args, &reply); err != nil {
 			id = ck.getServerIDRandomly()
 			//log.Println(err)
@@ -92,6 +94,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) error {
 
 		switch reply.Err {
 		case OK:
+			// 执行成功，更新正确的 leader 地址
 			ck.leaderID = id
 			return nil
 		case ErrWrongLeader:
@@ -104,7 +107,12 @@ func (ck *Clerk) PutAppend(key string, value string, op string) error {
 			id = ck.getServerIDRandomly()
 		}
 	}
+	// 已达最大尝试次数
 	return fmt.Errorf(ErrRetryCountReached)
+}
+
+func (ck *Clerk) Delete(key string) error {
+	return ck.PutAppend(key, "", "Delete")
 }
 
 func (ck *Clerk) Put(key string, value string) error {

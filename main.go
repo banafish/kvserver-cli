@@ -41,13 +41,25 @@ func main() {
 			if len(arr) != 2 {
 				fmt.Println("输入有误")
 			} else {
-				fmt.Println(ck.Get(arr[1]))
+				res, err := ck.Get(arr[1])
+				if err != nil {
+					fmt.Println(err)
+				} else {
+					fmt.Println(res)
+				}
 			}
-		case "put":
+		case "put", "set":
 			if len(arr) != 3 {
 				fmt.Println("输入有误")
 			} else {
 				ck.Put(arr[1], arr[2])
+				fmt.Println("ok")
+			}
+		case "delete":
+			if len(arr) != 2 {
+				fmt.Println("输入有误")
+			} else {
+				ck.Delete(arr[1])
 				fmt.Println("ok")
 			}
 		case "append":
